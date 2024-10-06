@@ -17,6 +17,7 @@
     int right=height(root->right);
     return (max(left,right)+1);
  }*/
+ //optimized solution
  pair<int,int> dfast(TreeNode* root){
     if(root==NULL){
         return make_pair(0,0);
