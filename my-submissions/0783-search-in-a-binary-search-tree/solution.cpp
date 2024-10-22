@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    TreeNode* func(TreeNode* root,int val){
+    TreeNode* searchBST(TreeNode* root, int val) {
         if(root==NULL){
             return NULL;
         }
@@ -19,14 +19,11 @@ public:
             return root;
         }
         else if(root->val>val){
-            return func(root->left,val);
+            return searchBST(root->left,val);
         }
         else if(root->val<val){
-            return func(root->right,val);
+            return searchBST(root->right,val);
         }
         return NULL;
-    }
-    TreeNode* searchBST(TreeNode* root, int val) {
-        return func(root,val);
     }
 };
