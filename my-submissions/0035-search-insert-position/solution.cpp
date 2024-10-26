@@ -19,10 +19,5 @@ public:
             }
         }
         return 0;
-        // vector<int> ans;
-        // ans=nums;
-        // ans.push_back(target);
-        // sort()
-        
     }
 };
