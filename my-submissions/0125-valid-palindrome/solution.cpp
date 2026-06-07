@@ -1,19 +1,25 @@
 class Solution {
 public:
     bool isPalindrome(string s) {
-    string temp;
-    for (char c : s) {
-        if (isalnum(c)) {
-            temp += tolower(c);
+        int l = 0, r = s.length() - 1;
+
+        while (l < r) {
+            while (l < r && !alphaNum(s[l])) {
+                l++;
+            }
+            while (r > l && !alphaNum(s[r])) {
+                r--;
+            }
+            if (tolower(s[l]) != tolower(s[r])) {
+                return false;
+            }
+            l++; r--;
         }
+        return true;
     }
-    int n = temp.size();
-    for (int i = 0; i < n / 2; ++i) {
-        if (temp[i] !=temp[n - 1 - i]) {
-            return false;
-        }
-    }
-    return true;
-        
+    bool alphaNum(char c) {
+        return (c >= 'A' && c <= 'Z' ||
+                c >= 'a' && c <= 'z' ||
+                c >= '0' && c <= '9');
     }
 };
