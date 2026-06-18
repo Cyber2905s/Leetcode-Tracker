@@ -1,42 +1,44 @@
 class Solution {
 public:
-    bool checkequal(int a[26], int b[26]){
-        for (int i=0;i<26;i++){
-            if(a[i]!=b[i]){
-                return false;
-            }
-        }
-        return true;
-    }
     bool checkInclusion(string s1, string s2) {
-        int count1[26]={0};
+        if(s1.length()>s2.length()){
+            return false;
+        }
+        vector<int> s1count(26,0);
+        vector<int> s2count(26,0);
         for(int i=0;i<s1.length();i++){
-            int index = s1[i]-'a';
-            count1[index]++;
+            s1count[s1[i]-'a']++;
+            s2count[s2[i]-'a']++;
         }
-        int i=0;
-        int ws = s1.length();
-        int count2[26]={0};
-        while(i<ws && i<s2.length()){
-            int index= s2[i]-'a';
-            count2[index]++;
-            i++;
-        }
-        if(checkequal(count1,count2)){
-            return 1;
-        }
-        while(i<s2.length()){
-            char newc =s2[i];
-            int index = newc-'a';
-            count2[index]++;
-            char oldc = s2[i-ws];
-            int index1 = oldc - 'a';
-            count2[index1]--;
-            i++;
-            if(checkequal(count1,count2)){
-            return 1;
+        int matches=0;
+        for(int i=0;i<26;i++){
+            if(s1count[i]==s2count[i]){
+                matches++;
             }
         }
-        return 0;
+        int l=0;
+        for(int r=s1.length();r<s2.length();r++){
+            if(matches==26){
+                return true;
+            }
+            int index=s2[r]-'a';
+            s2count[index]++;
+            if(s2count[index]==s1count[index]){
+                matches++;
+            }
+            else if(s1count[index]+1==s2count[index]){
+                matches--;
+            }
+            index=s2[l]-'a';
+            s2count[index]--;
+            if(s2count[index]==s1count[index]){
+                matches++;
+            }
+            else if(s1count[index]-1==s2count[index]){
+                matches--;
+            }
+            l++;
+        }
+        return matches==26;
     }
 };
