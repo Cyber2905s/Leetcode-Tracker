@@ -8,62 +8,28 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
- ListNode* reverse(ListNode* head){
-    ListNode* curr=head;
-    ListNode* prev=NULL;
-    ListNode* next=NULL;
-    while(curr!=NULL){
-        next=curr->next;
-        curr->next=prev;
-        prev=curr;
-        curr=next;
-    }
-    return prev;
-}
-void insert(ListNode* &head,ListNode* &tail,int digit){
-    ListNode* temp=new ListNode(digit);
-    if(head==NULL){
-        head=temp;
-        tail=temp;
-        return;
-    }
-    else{
-        tail->next=temp;
-        tail=temp;
-    }
-}
-ListNode* add(ListNode* l1,ListNode* l2){
-    int carry=0;
-    ListNode* ansh=NULL;
-    ListNode* anst=NULL;
-    while(l1!=NULL || l2!=NULL || carry!=0){
-        int val1=0,val2=0;
-        if(l1!=NULL){
-            val1=l1->val;
-        }
-        if(l2!=NULL){
-            val2=l2->val;
-        }
-        int sum=carry+val1+val2 ;
-        int digit=sum%10;
-        insert(ansh,anst,digit);
-        carry=sum/10;
-        if(l1!=NULL){
-            l1=l1->next;
-        }
-        if(l2!=NULL){
-            l2=l2->next;
-        }
-    }
-    return ansh;
-}
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        // l1=reverse(l1);
-        // l2=reverse(l2); 
-        ListNode* ans=add(l1,l2);
-        // ans=reverse(ans);
-        return ans;
+        ListNode* dummy = new ListNode();
+        ListNode* temp = dummy;
+        int carry = 0;
+        while(l1 || l2 || carry){
+            int sum = 0;
+            if(l1!=nullptr){
+                sum+=l1->val;
+                l1 = l1->next;
+            }
+            if(l2!=nullptr){
+                sum+=l2->val;
+                l2 = l2->next;
+            }
+            sum += carry;
+            carry = sum/10;
+            ListNode* node = new ListNode(sum%10);
+            temp->next = node;
+            temp = temp->next;
+        }
+        return dummy->next;
     }
 };
