@@ -9,58 +9,24 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
- pair<bool, int> balf(TreeNode* root) {
-        if(root == NULL)
-        {
-            pair<bool, int> p = make_pair(true, 0);
-            return p;
-        }
-        
-        pair<int,int> left = balf(root->left);
-        pair<int,int> right = balf(root->right);
-        
-        
-        bool leftAns = left.first;
-        bool rightAns = right.first;
-        
-        bool diff = abs (left.second - right.second ) <=1;
-        
-        pair<bool,int> ans;
-        ans.second = max(left.second, right.second) + 1;
-        
-        if(leftAns && rightAns && diff) {
-           ans.first = true;
-        }
-        else
-        {
-            ans.first = false;
-        }
-        return ans;
-    }
 class Solution {
 public:
-    /*int height(TreeNode* root) {
-        if(root==NULL){
-            return 0; 
-        }
-        int left=height(root->left);
-        int right=height(root->right);
-        int ans=max(left,right)+1;
-        return ans;
-    }*/
     bool isBalanced(TreeNode* root) {
-        /*if(root==NULL){
-            return true;
+        return height(root)!=-1;
+    }
+    
+    int height(TreeNode* root){
+        if(root == nullptr){
+            return 0;
         }
-        bool left=isBalanced(root->left);
-        bool right=isBalanced(root->right);
-        bool diff=abs(height(root->left)-height(root->right))<=1;
-        if(left && right && diff){
-            return true;
+        int lh = height(root->left);
+        int rh = height(root->right);
+        if(lh == -1 || rh == -1){
+            return -1;
         }
-        else{
-            return false;
-        }*/
-        return balf(root).first;
+        if(abs(lh-rh) > 1){
+            return -1;
+        }
+        return 1+max(rh,lh);
     }
 };
