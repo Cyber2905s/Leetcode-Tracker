@@ -10,17 +10,20 @@
 
 class Solution {
 public:
-    TreeNode* LCA(TreeNode* root,int n1,int n2){
-        if(root==NULL){return NULL;}
-        if(n1<root->val && n2<root->val){
-           return LCA(root->left,n1,n2);
-        }
-        if(n1>root->val && n2>root->val){
-            return LCA(root->right,n1,n2);
-        }
-        return root;
-    }
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        return LCA(root,p->val,q->val);
+        if(root == NULL || root == p || root == q){
+            return root;
+        }
+        TreeNode* right = lowestCommonAncestor(root->right,p,q);
+        TreeNode* left = lowestCommonAncestor(root->left,p,q);
+        if(right == NULL){
+            return left;
+        }
+        else if(left == NULL){
+            return right;
+        }
+        else{
+            return root;
+        }
     }
 };
