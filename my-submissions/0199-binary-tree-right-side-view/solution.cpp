@@ -11,21 +11,16 @@
  */
 class Solution {
 public:
-void solve(vector<int> &ans,TreeNode* root,int level){
-    if(root==NULL){
-        return ;
-    }
-    //naye level mei aa gaye hai
-    if(level==ans.size()){
-        ans.push_back(root->val);
-    }
-    //call right to left ja rahi hai kyuki right view print karwana hai
-    solve(ans,root->right,level+1);
-    solve(ans,root->left,level+1);
-}
     vector<int> rightSideView(TreeNode* root) {
-        vector<int> ans;
-        solve(ans,root,0);
-        return ans;
+        vector<int> res;
+        rightDfs(root,0,res);
+        return res;
+    }
+
+    void rightDfs(TreeNode* root, int level, vector<int>& res){
+        if(!root) return;
+        if(res.size() == level) res.push_back(root->val);
+        rightDfs(root->right, level+1, res);
+        rightDfs(root->left, level+1, res);
     }
 };
