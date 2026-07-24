@@ -11,27 +11,33 @@
  */
 class Solution {
 public:
-    int prevOrder;
     int kthSmallest(TreeNode* root, int k) {
-        if(root == NULL){
-            return -1;
-        }
-        if(root->left){
-            int leftAns = kthSmallest(root->left,k);
-            if(leftAns != -1){
-                return leftAns;
+        int count =0;
+        int ans = -1;
+        TreeNode* curr = root;
+        while(curr){
+            if(curr->left == NULL){
+                count++;
+                if(count == k) ans = curr->val;
+                curr = curr->right;
+            }
+            else{
+                TreeNode* pre = curr->left;
+                while(pre->right && pre->right != curr){
+                    pre = pre->right;
+                }
+                if(!pre->right){
+                    pre->right = curr;
+                    curr = curr->left;
+                }
+                else{
+                    pre->right = NULL;
+                    count++;
+                    if(count == k) ans = curr->val;
+                    curr = curr->right;
+                }
             }
         }
-        if(prevOrder+1 == k){
-            return root->val;
-        }
-        prevOrder+=1;
-        if(root->right){
-            int rightAns = kthSmallest(root->right,k);
-            if(rightAns != -1){
-                return rightAns;
-            }
-        }
-        return -1;
+        return ans;
     }
 };
