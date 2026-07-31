@@ -1,18 +1,19 @@
 class Solution {
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
-        int n= nums.size();
-        int sets = 1<<n;
+        vector<int> ds;
         vector<vector<int>> ans;
-        for(int i=0;i<sets;i++){
-            vector<int> subsets;
-            for(int j =0;j<n;j++){
-                if(i&(1<<j)){
-                    subsets.push_back(nums[j]);
-                }
-            }
-            ans.push_back(subsets);
-        }
+        func(0,nums,ds,ans);
         return ans;
+    }
+    void func(int ind,vector<int> &nums,vector<int> &ds,vector<vector<int>> &ans){
+        if(ind==nums.size()){
+            ans.push_back(ds);
+            return;
+        }
+        ds.push_back(nums[ind]);
+        func(ind+1,nums,ds,ans);
+        ds.pop_back();
+        func(ind+1,nums,ds,ans);
     }
 };
