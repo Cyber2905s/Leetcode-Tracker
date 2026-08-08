@@ -25,7 +25,7 @@ public:
                 }
             }
         }
-        if(topo.size()<numCourses) return {};
+        if(topo.size()<numCourses) return {};//if there is a cycle the courses cant be completed so return empty array
         return topo;
     }
 };
