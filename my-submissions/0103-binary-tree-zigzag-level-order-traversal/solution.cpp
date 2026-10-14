@@ -25,14 +25,16 @@ public:
             for(int i=0;i<size;i++){
                 TreeNode* node=q.front();
                 q.pop();
-                int index=(ltr)?i:(size-i-1);
-                row[index]=node->val;
+                row[i] = node->val;
                 if(node->left){
                     q.push(node->left);
                 }
                 if(node->right){
                     q.push(node->right);
                 }
+            }
+            if(!ltr){
+                reverse(row.begin(),row.end());
             }
             ltr=!ltr;
             ans.push_back(row);
